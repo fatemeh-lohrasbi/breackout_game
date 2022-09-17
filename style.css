@@ -10,3 +10,9 @@
     background-color: blue;
     position: absolute;
 }
+.user {
+    width: 100px;
+    height: 20px;
+    background-color: rgb(249, 122, 143);
+    position: absolute;
+}
