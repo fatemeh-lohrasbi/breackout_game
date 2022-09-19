@@ -1,15 +1,21 @@
-.grid{
+* {
+    box-sizing: border-box;
+}
+
+.grid {
     width: 560px;
     height: 300px;
     border: 1px solid #000;
     position: absolute;
 }
-.block{
+
+.block {
     width: 100px;
     height: 20px;
     background-color: blue;
     position: absolute;
 }
+
 .user {
     width: 100px;
     height: 20px;
