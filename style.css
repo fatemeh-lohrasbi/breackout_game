@@ -22,3 +22,11 @@
     background-color: rgb(249, 122, 143);
     position: absolute;
 }
+
+.ball{
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50px;
+    position: absolute;
+}

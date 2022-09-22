@@ -53,14 +53,15 @@ function add_block() {
 add_block();
 
 
-const user_start = [230, 10];
-const current_position = user_start;
-
 //add user
 const user = document.createElement('div');
 user.classList.add('user');
 grid.appendChild(user);
 draw_user();
+
+// user position
+const user_start = [230, 10];
+const current_position = user_start;
 
 // draw the user
 function draw_user() {
@@ -88,3 +89,18 @@ function move_user(e) {
 
 addEventListener('keydown', move_user)
 
+// add ball
+const ball = document.createElement('div')
+ball.classList.add('ball')
+grid.appendChild(ball)
+draw_ball()
+
+// ball position
+const ball_start = [265, 40];
+const ball_current_position = ball_start;
+
+// draw ball
+function draw_ball(){
+    ball.style.left = ball_current_position[0] + 'px';
+    ball.style.bottom = ball_current_position[1] + 'px';
+}
