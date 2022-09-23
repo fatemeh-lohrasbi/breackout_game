@@ -2,7 +2,10 @@ const grid = document.querySelector('.grid');
 const block_width = 100;
 const block_height = 20;
 const board_width = 560;
-
+let timer_id;
+const ball_diameter = 20;
+let x_direction = 2;
+let y_direction = 2;
 
 // create 15 blocks
 class Block {
@@ -53,12 +56,6 @@ function add_block() {
 add_block();
 
 
-//add user
-const user = document.createElement('div');
-user.classList.add('user');
-grid.appendChild(user);
-draw_user();
-
 // user position
 const user_start = [230, 10];
 const current_position = user_start;
@@ -68,6 +65,13 @@ function draw_user() {
     user.style.left = current_position[0] + 'px';
     user.style.bottom = current_position[1] + 'px';
 }
+
+//add user
+const user = document.createElement('div');
+user.classList.add('user');
+grid.appendChild(user);
+draw_user();
+
 
 // move user                            
 function move_user(e) {
@@ -89,12 +93,6 @@ function move_user(e) {
 
 addEventListener('keydown', move_user)
 
-// add ball
-const ball = document.createElement('div')
-ball.classList.add('ball')
-grid.appendChild(ball)
-draw_ball()
-
 // ball position
 const ball_start = [265, 40];
 const ball_current_position = ball_start;
@@ -104,3 +102,37 @@ function draw_ball(){
     ball.style.left = ball_current_position[0] + 'px';
     ball.style.bottom = ball_current_position[1] + 'px';
 }
+// add ball
+const ball = document.createElement('div')
+ball.classList.add('ball')
+grid.appendChild(ball)
+draw_ball()
+
+// move ball
+function move_ball(){
+    ball_current_position[0] += x_direction; //2
+    ball_current_position[1] += y_direction; //2
+    draw_ball()
+    check_collisions()
+}
+timer_id = setInterval(move_ball,30)
+
+// check for collisions
+function check_collisions(){
+    if (ball_current_position[0] >= (board_width - ball_diameter)){
+        change_direction()
+    }
+}
+
+function change_direction(){
+    if(x_direction === 2 && y_direction === 2 ){
+        y_direction = -2;
+        return;
+    }
+}
+
+
+
+
+
+
