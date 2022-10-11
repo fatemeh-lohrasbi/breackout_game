@@ -8,6 +8,7 @@ let timer_id;
 const ball_diameter = 20;
 let x_direction = 2;
 let y_direction = 2;
+let score = 0;
 
 // create 15 blocks
 class Block {
@@ -103,7 +104,7 @@ const ball_start = [265, 40];
 const ball_current_position = ball_start;
 
 // draw ball
-function draw_ball(){
+function draw_ball() {
     ball.style.left = ball_current_position[0] + 'px';
     ball.style.bottom = ball_current_position[1] + 'px';
 }
@@ -114,28 +115,54 @@ grid.appendChild(ball)
 draw_ball()
 
 // move ball
-function move_ball(){
+function move_ball() {
     ball_current_position[0] += x_direction; //2
     ball_current_position[1] += y_direction; //2
     draw_ball()
     check_collisions()
 }
-timer_id = setInterval(move_ball,30)
+timer_id = setInterval(move_ball, 30)
 
 
 
 // check for collisions
-function check_collisions(){
-    if (ball_current_position[0] >= (board_width - ball_diameter) || 
+function check_collisions() {
+
+    // check for block collosion
+    for (let i = 0; i < all_blocks.length; i++) {
+
+        // check if ball is between blocks: in width and height
+        if (
+            // check width or x axis   
+            (ball_current_position[0] > all_blocks[i].bottomLeft[0] && ball_current_position[0] < all_blocks[i].bottomRight[0]) &&            
+            // check height or y axis
+            ((ball_current_position[1] + ball_diameter) > all_blocks[i].bottomLeft[1] && ball_current_position[1] < all_blocks[i].topLeft[1])
+        ) { // if condition is true then remove a block 
+            const all_blocks_style = Array.from(document.querySelectorAll('.block'));
+            all_blocks_style[i].classList.remove('block');
+            all_blocks.splice(i , 1);
+            // all_blocks[i].style.display='none'  //why this way does't work
+            change_direction();
+            score++;
+            score_display.innerHTML=score;
+
+        }
+        // check width(x axis): if block is between bottom left and bottom right
+
+
+    }
+
+    // check for wall collosion
+    if (ball_current_position[0] >= (board_width - ball_diameter) ||
         ball_current_position[1] >= (board_height - ball_diameter) ||
-        ball_current_position[0] <= 0        
-    ){
+        ball_current_position[0] <= 0
+    ) {
         change_direction()
     }
     // console.log(ball_current_position)
 
     // check for game over
-    if(ball_current_position[1] <= 0){
+    if (ball_current_position[1] <= 0) {
         clearInterval(timer_id);
         score_display.innerHTML = 'you lose';
         document.removeEventListener('keydown', move_user);
@@ -144,10 +171,10 @@ function check_collisions(){
 
 // 540, 280 x direction and y direction
 
-function change_direction(){
-    if(x_direction === 2 && y_direction === 2 ){
+function change_direction() {
+    if (x_direction === 2 && y_direction === 2) {
         y_direction = -2;
-        return; 
+        return;
     }
     if (x_direction === 2 && y_direction === -2) {
         x_direction = -2;
