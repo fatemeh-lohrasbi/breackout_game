@@ -1,7 +1,9 @@
 const grid = document.querySelector('.grid');
+const score_display = document.querySelector('#score')
 const block_width = 100;
 const block_height = 20;
 const board_width = 560;
+const board_height = 300;
 let timer_id;
 const ball_diameter = 20;
 let x_direction = 2;
@@ -39,6 +41,7 @@ const all_blocks = [
     new Block(230, 210),
     new Block(340, 210),
     new Block(450, 210),
+
 ]
 console.log(all_blocks[0])
 console.log(all_blocks[1])
@@ -51,6 +54,7 @@ function add_block() {
         block.style.left = all_blocks[i].bottomLeft[0] + 'px';
         block.style.bottom = all_blocks[i].bottomLeft[1] + 'px';
         grid.appendChild(block);
+
     }
 }
 add_block();
@@ -64,6 +68,7 @@ const current_position = user_start;
 function draw_user() {
     user.style.left = current_position[0] + 'px';
     user.style.bottom = current_position[1] + 'px';
+
 }
 
 //add user
@@ -91,7 +96,7 @@ function move_user(e) {
     }
 }
 
-addEventListener('keydown', move_user)
+document.addEventListener('keydown', move_user)
 
 // ball position
 const ball_start = [265, 40];
@@ -117,19 +122,47 @@ function move_ball(){
 }
 timer_id = setInterval(move_ball,30)
 
+
+
 // check for collisions
 function check_collisions(){
-    if (ball_current_position[0] >= (board_width - ball_diameter)){
+    if (ball_current_position[0] >= (board_width - ball_diameter) || 
+        ball_current_position[1] >= (board_height - ball_diameter) ||
+        ball_current_position[0] <= 0        
+    ){
         change_direction()
     }
+    // console.log(ball_current_position)
+
+    // check for game over
+    if(ball_current_position[1] <= 0){
+        clearInterval(timer_id);
+        score_display.innerHTML = 'you lose';
+        document.removeEventListener('keydown', move_user);
+    }
 }
+
+// 540, 280 x direction and y direction
 
 function change_direction(){
     if(x_direction === 2 && y_direction === 2 ){
         y_direction = -2;
+        return; 
+    }
+    if (x_direction === 2 && y_direction === -2) {
+        x_direction = -2;
+        return;
+    }
+    if (x_direction === -2 && y_direction === -2) {
+        y_direction = 2;
+        return;
+    }
+    if (x_direction === -2 && y_direction === 2) {
+        x_direction = 2;
         return;
     }
 }
+
 
 
 
