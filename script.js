@@ -44,8 +44,8 @@ const all_blocks = [
     new Block(450, 210),
 
 ]
-console.log(all_blocks[0])
-console.log(all_blocks[1])
+// console.log(all_blocks[0])
+// console.log(all_blocks[1])
 
 // draw block
 function add_block() {
@@ -55,7 +55,6 @@ function add_block() {
         block.style.left = all_blocks[i].bottomLeft[0] + 'px';
         block.style.bottom = all_blocks[i].bottomLeft[1] + 'px';
         grid.appendChild(block);
-
     }
 }
 add_block();
@@ -69,7 +68,6 @@ const current_position = user_start;
 function draw_user() {
     user.style.left = current_position[0] + 'px';
     user.style.bottom = current_position[1] + 'px';
-
 }
 
 //add user
@@ -133,23 +131,19 @@ function check_collisions() {
 
         // check if ball is between blocks: in width and height
         if (
-            // check width or x axis   
-            (ball_current_position[0] > all_blocks[i].bottomLeft[0] && ball_current_position[0] < all_blocks[i].bottomRight[0]) &&            
-            // check height or y axis
+            // check width(x axis): if block is between bottom left and bottom right
+            (ball_current_position[0] > all_blocks[i].bottomLeft[0] && ball_current_position[0] < all_blocks[i].bottomRight[0]) &&
+            // check height(y axis): if block is between bottom left and top left
             ((ball_current_position[1] + ball_diameter) > all_blocks[i].bottomLeft[1] && ball_current_position[1] < all_blocks[i].topLeft[1])
         ) { // if condition is true then remove a block 
             const all_blocks_style = Array.from(document.querySelectorAll('.block'));
             all_blocks_style[i].classList.remove('block');
-            all_blocks.splice(i , 1);
+            all_blocks.splice(i, 1);
             // all_blocks[i].style.display='none'  //why this way does't work
             change_direction();
             score++;
-            score_display.innerHTML=score;
-
+            score_display.innerHTML = score;
         }
-        // check width(x axis): if block is between bottom left and bottom right
-
-
     }
 
     // check for wall collosion
@@ -161,6 +155,14 @@ function check_collisions() {
     }
     // console.log(ball_current_position)
 
+    // check for user collosion
+    if (
+        (ball_current_position[0] > current_position[0] && ball_current_position[0] < current_position[0] + block_width) &&
+        (ball_current_position[1] > current_position[1] && ball_current_position[1] < current_position[1] + block_height)
+    ) {
+        change_direction()
+    }
+
     // check for game over
     if (ball_current_position[1] <= 0) {
         clearInterval(timer_id);
@@ -169,7 +171,6 @@ function check_collisions() {
     }
 }
 
-// 540, 280 x direction and y direction
 
 function change_direction() {
     if (x_direction === 2 && y_direction === 2) {
