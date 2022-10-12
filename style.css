@@ -1,13 +1,26 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(44, 35, 35);
+    color: aliceblue;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+
 }
 
 .grid {
     width: 560px;
     height: 300px;
-    border: 1px solid #000;
-    position: absolute;
-    margin-top: 150px;
+    border: 1px solid yellow;
+    position: relative;
 }
 
 .block {
@@ -20,14 +33,14 @@
 .user {
     width: 100px;
     height: 20px;
-    background-color: rgb(249, 122, 143);
+    background-color: yellow;
     position: absolute;
 }
 
-.ball{
+.ball {
     width: 20px;
     height: 20px;
-    background-color: red;
+    background-color: yellow;
     border-radius: 50px;
     position: absolute;
 }

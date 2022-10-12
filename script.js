@@ -4,11 +4,11 @@ const block_width = 100;
 const block_height = 20;
 const board_width = 560;
 const board_height = 300;
-let timer_id;
 const ball_diameter = 20;
 let x_direction = 2;
 let y_direction = 2;
 let score = 0;
+let timer_id;
 
 // create 15 blocks
 class Block {
@@ -76,7 +76,6 @@ user.classList.add('user');
 grid.appendChild(user);
 draw_user();
 
-
 // move user                            
 function move_user(e) {
     switch (e.key) {
@@ -119,7 +118,7 @@ function move_ball() {
     draw_ball()
     check_collisions()
 }
-timer_id = setInterval(move_ball, 30)
+timer_id = setInterval(move_ball, 15)
 
 
 
@@ -143,6 +142,14 @@ function check_collisions() {
             change_direction();
             score++;
             score_display.innerHTML = score;
+
+            // check for win
+            if(all_blocks.length == 0){
+                score_display.innerHTML = 'YOU WIN 😍🎇';
+                clearInterval(timer_id);
+                document.removeEventListener('keydown', move_user)
+                document.body.style.background = '#12a152';
+            }
         }
     }
 
@@ -166,8 +173,12 @@ function check_collisions() {
     // check for game over
     if (ball_current_position[1] <= 0) {
         clearInterval(timer_id);
-        score_display.innerHTML = 'you lose';
+        score_display.innerHTML = 'YOU LOSE 😢';
         document.removeEventListener('keydown', move_user);
+        document.body.style.background = '#c53838'
+        setTimeout(function(){
+            window.location.reload();            
+        }, 5000)
     }
 }
 
